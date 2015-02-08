@@ -1,16 +1,15 @@
 package com.codepath.apps.mytwitter;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.codepath.apps.mytwitter.R;
 import com.codepath.apps.mytwitter.models.Tweet;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.codepath.apps.mytwitter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -30,6 +29,8 @@ public class TimelineActivity extends ActionBarActivity {
 
     private long max_id = 0;
     private long since_id = 1;
+
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class TimelineActivity extends ActionBarActivity {
         tweetsArrayAdapter = new TweetsArrayAdapter(this, tweetList);
         lvTweets.setAdapter(tweetsArrayAdapter);
         populateHomeTimeline();
+
+        SetCurrentUser();
     }
 
     private void populateHomeTimeline() {
@@ -72,6 +75,15 @@ public class TimelineActivity extends ActionBarActivity {
         });
     }
 
+    private void SetCurrentUser() {
+        client.getAccount(new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                currentUser = User.fromJson(jsonObject);
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,7 +100,9 @@ public class TimelineActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_compose) {
+            Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+            startActivity(intent);
             return true;
         }
 

@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.codepath.apps.mytwitter.TimelineActivity">
-    <item android:id="@+id/action_compose"
-        android:title="Compose"
-        android:icon="@drawable/ic_compose"
+    tools:context="com.codepath.apps.mytwitter.ComposeActivity">
+    <item android:id="@+id/action_send"
+        android:title="Send"
+        android:icon="@drawable/ic_send"
         app:showAsAction="ifRoom" />
 </menu>

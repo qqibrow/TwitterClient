@@ -3,10 +3,12 @@ package com.codepath.apps.mytwitter.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by lniu on 2/4/15.
  */
-public class User {
+public class User implements Serializable {
     private String name;
     private long uid;
     private String screenName;
