@@ -1,12 +1,15 @@
 package com.codepath.apps.mytwitter;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.codepath.apps.mytwitter.models.Tweet;
 import com.codepath.apps.mytwitter.models.User;
@@ -34,11 +37,29 @@ public class TimelineActivity extends ActionBarActivity {
 
     private int REQUEST_CODE = 1;
 
+    private SwipeRefreshLayout swipeContainer;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(TimelineActivity.this, "update", Toast.LENGTH_SHORT).show();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        
         lvTweets = (ListView) findViewById(R.id.lvTweets);
         lvTweets.setOnScrollListener(new EndlessScrollListener() {
             @Override
@@ -48,6 +69,16 @@ public class TimelineActivity extends ActionBarActivity {
                 populateHomeTimeline();
                 // or customLoadMoreDataFromApi(totalItemsCount);
             }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (lvTweets == null || lvTweets.getChildCount() == 0) ?
+                                0 : lvTweets.getChildAt(0).getTop();
+                swipeContainer.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
+                super.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+
+            }
         });
 
         client = TwitterApplication.getRestClient();
@@ -55,6 +86,8 @@ public class TimelineActivity extends ActionBarActivity {
         tweetList = new ArrayList<>();
         tweetsArrayAdapter = new TweetsArrayAdapter(this, tweetList);
         lvTweets.setAdapter(tweetsArrayAdapter);
+
+
         populateHomeTimeline();
 
         SetCurrentUser();
