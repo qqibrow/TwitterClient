@@ -32,6 +32,8 @@ public class TimelineActivity extends ActionBarActivity {
 
     private User currentUser;
 
+    private int REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,10 +105,22 @@ public class TimelineActivity extends ActionBarActivity {
         if (id == R.id.action_compose) {
             Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
             intent.putExtra("Myself", currentUser);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // ActivityOne.java, time to handle the result of the sub-activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            // Extract name value from result extras
+            Tweet composed_tweet = (Tweet) data.getSerializableExtra("Tweet");
+            tweetsArrayAdapter.insert(composed_tweet, 0);
+            tweetsArrayAdapter.notifyDataSetChanged();
+        }
     }
 }

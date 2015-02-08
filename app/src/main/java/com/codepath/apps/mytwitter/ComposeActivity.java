@@ -1,5 +1,6 @@
 package com.codepath.apps.mytwitter;
 
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,12 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.mytwitter.R;
+import com.codepath.apps.mytwitter.models.Tweet;
 import com.codepath.apps.mytwitter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
+
+import java.sql.Time;
 
 public class ComposeActivity extends ActionBarActivity {
 
@@ -70,6 +74,11 @@ public class ComposeActivity extends ActionBarActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("ComposeActivity", "post succeed.");
+                Tweet tweet = Tweet.fromJson(response);
+                Intent data = new Intent();
+                data.putExtra("Tweet", tweet);
+                setResult(RESULT_OK, data);
+                ComposeActivity.this.finish();
             }
         });
     }

@@ -4,13 +4,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by lniu on 2/4/15.
  */
-public class Tweet {
+public class Tweet implements Serializable {
     private String body;
     private long uid;
     private String createdAt;
