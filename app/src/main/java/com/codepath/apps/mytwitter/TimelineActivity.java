@@ -1,6 +1,9 @@
 package com.codepath.apps.mytwitter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -25,14 +28,10 @@ import java.util.List;
 public class TimelineActivity extends ActionBarActivity {
 
     private TwitterClient client;
-    private List<Tweet> tweetList;
+    private ArrayList<Tweet> tweetList;
     private TweetsArrayAdapter tweetsArrayAdapter;
 
     private ListView lvTweets;
-
-    private long max_id = 0;
-    private long since_id = 1;
-
     private User currentUser;
 
     private int REQUEST_CODE = 1;
@@ -51,7 +50,17 @@ public class TimelineActivity extends ActionBarActivity {
             @Override
             public void onRefresh() {
                 Toast.makeText(TimelineActivity.this, "update", Toast.LENGTH_SHORT).show();
-                swipeContainer.setRefreshing(false);
+
+                // set current since_id(newest time)
+                if(tweetList.isEmpty()) {
+                    showToast("Tweet List is empty");
+                    return;
+                }
+                long newestId = tweetList.get(0).getUid();
+                long lastId = tweetList.get(tweetList.size()-1).getUid();
+                showToast(String.valueOf(newestId) + "  " + String.valueOf(lastId));
+                populateHomeTimeline(newestId, -1, true);
+
             }
         });
         // Configure the refreshing colors
@@ -59,15 +68,15 @@ public class TimelineActivity extends ActionBarActivity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        
+
         lvTweets = (ListView) findViewById(R.id.lvTweets);
         lvTweets.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to your AdapterView
-                populateHomeTimeline();
-                // or customLoadMoreDataFromApi(totalItemsCount);
+                long max_id =  tweetList.get(tweetList.size() - 1).getUid()-1;
+                populateHomeTimeline(1, max_id, false);
             }
 
             @Override
@@ -87,20 +96,34 @@ public class TimelineActivity extends ActionBarActivity {
         tweetsArrayAdapter = new TweetsArrayAdapter(this, tweetList);
         lvTweets.setAdapter(tweetsArrayAdapter);
 
+        // below are network request.
+        if(isNetworkAvailable()) {
+            populateHomeTimeline(1,-1, false);
+            SetCurrentUser();
+        } else {
 
-        populateHomeTimeline();
+        }
 
-        SetCurrentUser();
     }
 
-    private void populateHomeTimeline() {
+    private void populateHomeTimeline(long since_id, long max_id, final boolean recursive) {
         client.getHomeTimeline(since_id, max_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 ArrayList<Tweet> tweets = Tweet.fromJsonArray(jsonArray);
                 // find max_id and since_id
-                max_id = tweets.get(tweets.size() - 1).getUid()-1;
-                tweetsArrayAdapter.addAll(tweets);
+                if(tweets.isEmpty()) {
+                    showToast("Up to date now");
+                } else {
+                    // persistent.
+                    for(Tweet tweet: tweets) {
+                        tweet.getUser().save();
+                        tweet.save();
+                    }
+                    tweetsArrayAdapter.addAll(tweets);
+                }
+                if(recursive)
+                    swipeContainer.setRefreshing(false);
             }
 
             @Override
@@ -155,5 +178,16 @@ public class TimelineActivity extends ActionBarActivity {
             tweetsArrayAdapter.insert(composed_tweet, 0);
             tweetsArrayAdapter.notifyDataSetChanged();
         }
+    }
+
+    private Boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }

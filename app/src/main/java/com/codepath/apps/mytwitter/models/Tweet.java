@@ -8,13 +8,30 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 /**
  * Created by lniu on 2/4/15.
  */
-public class Tweet implements Serializable {
+
+@Table(name = "Tweets")
+public class Tweet extends Model implements Serializable {
+    public Tweet() {
+        super();
+    }
+
+    @Column(name = "body")
     private String body;
+
+    @Column(name = "uid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private long uid;
+
+    @Column(name = "createdAt")
     private String createdAt;
+
+    @Column(name = "user", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private User user;
 
     public String getBody() {
