@@ -2,6 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.codepath.apps.mytwitter.ComposeActivity">
+    <item
+        android:id="@+id/action_leftchars"
+        app:actionViewClass="android.widget.TextView"
+        app:showAsAction="ifRoom"
+        android:title="characters left" />
+
     <item android:id="@+id/action_send"
         android:title="Send"
         android:icon="@drawable/ic_send"

@@ -102,6 +102,7 @@ public class TimelineActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_compose) {
             Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+            intent.putExtra("Myself", currentUser);
             startActivity(intent);
             return true;
         }

@@ -44,4 +44,9 @@ public class User implements Serializable {
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
+
+    @Override
+    public String toString() {
+        return getName() + getUid() + getScreenName();
+    }
 }
