@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,8 +40,6 @@ public class TimelineActivity extends ActionBarActivity {
 
     private SwipeRefreshLayout swipeContainer;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,7 @@ public class TimelineActivity extends ActionBarActivity {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
                 Toast.makeText(TimelineActivity.this, "update", Toast.LENGTH_SHORT).show();
 
                 // set current since_id(newest time)
@@ -58,6 +59,7 @@ public class TimelineActivity extends ActionBarActivity {
                 }
                 long newestId = tweetList.get(0).getUid();
                 long lastId = tweetList.get(tweetList.size()-1).getUid();
+
                 showToast(String.valueOf(newestId) + "  " + String.valueOf(lastId));
                 populateHomeTimeline(newestId, -1, true);
 
@@ -96,12 +98,23 @@ public class TimelineActivity extends ActionBarActivity {
         tweetsArrayAdapter = new TweetsArrayAdapter(this, tweetList);
         lvTweets.setAdapter(tweetsArrayAdapter);
 
+        lvTweets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(TimelineActivity.this, TweetDetailActivity.class);
+
+                Tweet result = tweetList.get(position);
+                intent.putExtra("tweet", result);
+                startActivity(intent);
+            }
+        });
+
         // below are network request.
         if(isNetworkAvailable()) {
             populateHomeTimeline(1,-1, false);
             SetCurrentUser();
         } else {
-
+            showToast("Network not available");
         }
 
     }
