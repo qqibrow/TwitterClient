@@ -45,7 +45,9 @@
         android:layout_below="@+id/ivDetailProfile"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="10pt"/>
+        android:textSize="10pt"
+        android:autoLink="all"
+        android:linksClickable="true"/>
 
 
 </RelativeLayout>
@@ -74,7 +76,8 @@
             android:id="@+id/btnDetailEnter"
             android:layout_alignBottom="@+id/etDetailInput"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:onClick="onClick" />
 
     </RelativeLayout>
 

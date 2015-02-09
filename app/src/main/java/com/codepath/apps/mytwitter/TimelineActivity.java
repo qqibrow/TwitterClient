@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TimelineActivity extends ActionBarActivity {
@@ -48,7 +49,7 @@ public class TimelineActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_twitter_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setTitle("   TweetsTimeline");
+        getSupportActionBar().setTitle("   Home");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF3F9FE0));
     }
 
@@ -156,10 +157,21 @@ public class TimelineActivity extends ActionBarActivity {
                         tweet.getUser().save();
                         tweet.save();
                     }
-                    tweetsArrayAdapter.addAll(tweets);
+                    if(recursive) {
+                        // From tail to front add to least
+                        Collections.reverse(tweets);
+                        for (Tweet tweet : tweets) {
+                            tweetsArrayAdapter.insert(tweet, 0);
+                        }
+                        // Stop showing progress bar.
+                    } else {
+                        tweetsArrayAdapter.addAll(tweets);
+                    }
+
                 }
                 if(recursive)
                     swipeContainer.setRefreshing(false);
+
             }
 
             @Override
