@@ -1,5 +1,6 @@
 package com.codepath.apps.mytwitter;
 
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,11 +22,20 @@ public class TweetDetailActivity extends ActionBarActivity {
     private EditText etInput;
     private ImageView ivProfile;
 
+
+    private void setActionbar() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_twitter_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("   Tweet");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF3F9FE0));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet_detail);
-
+        setActionbar();
         tvUsername = (TextView) findViewById(R.id.tvDetailTweetName);
         tvScreenName = (TextView) findViewById(R.id.tvDetailScreenName);
 

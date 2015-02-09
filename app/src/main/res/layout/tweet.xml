@@ -4,16 +4,12 @@
     android:background="#ffffff">
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
         android:id="@+id/ivProfile"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
+        style="@style/Profile"
         android:src="@drawable/ic_launcher"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_margin="5dp"
         />
 
     <TextView
@@ -24,8 +20,8 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivProfile"
         android:layout_toEndOf="@+id/ivProfile"
-        android:textStyle="bold"
-        android:textSize="10pt"/>
+        style="@style/Username"
+       />
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,6 +39,7 @@
         android:text="New Text"
         android:id="@+id/tvTimestamp"
         android:textColor="#C2CBCE"
+        android:layout_marginRight="2dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

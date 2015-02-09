@@ -2,6 +2,7 @@ package com.codepath.apps.mytwitter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -43,13 +44,20 @@ public class TimelineActivity extends ActionBarActivity {
     boolean enablePullDownUpdate = true;
     boolean enableScrollDown = true;
 
+    private void setActionbar() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_twitter_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("   TweetsTimeline");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF3F9FE0));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        setActionbar();
 
-            // getSupportActionBar().setLogo(R.drawable.ic_twitter_logo);
-           // getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         if (enablePullDownUpdate) {

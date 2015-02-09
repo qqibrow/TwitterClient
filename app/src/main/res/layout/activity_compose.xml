@@ -7,8 +7,7 @@
     tools:context="com.codepath.apps.mytwitter.ComposeActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+       style="@style/Profile"
         android:id="@+id/ivMyProfile"
         android:src="@drawable/ic_launcher"
         android:layout_alignParentTop="true"
@@ -20,6 +19,7 @@
         android:layout_height="wrap_content"
         android:text="Lu"
         android:id="@+id/tvMyName"
+        style="@style/Username"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivMyProfile"
         android:layout_toEndOf="@+id/ivMyProfile" />
@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="\@qqibrow"
         android:id="@+id/tvMyId"
+        android:textColor="#C2CBCE"
         android:layout_below="@+id/tvMyName"
         android:layout_toRightOf="@+id/ivMyProfile"
         android:layout_toEndOf="@+id/ivMyProfile" />
@@ -44,6 +45,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:textColorHint="#C2CBCE"
         android:hint="What&apos;s happening?" />
 
 </RelativeLayout>

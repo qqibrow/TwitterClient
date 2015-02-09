@@ -1,6 +1,7 @@
 package com.codepath.apps.mytwitter;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -35,11 +36,19 @@ public class ComposeActivity extends ActionBarActivity {
 
     private TextView tvCharLeft;
 
+    private void setActionbar() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_twitter_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("   Compose");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF3F9FE0));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+        setActionbar();
         client = TwitterApplication.getRestClient();
 
         User myself = (User)getIntent().getSerializableExtra("Myself");
@@ -89,6 +98,7 @@ public class ComposeActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_compose, menu);
         MenuItem menuItem = menu.findItem(R.id.action_leftchars);
         tvCharLeft= (TextView)MenuItemCompat.getActionView(menuItem);
+        tvCharLeft.setText("0/140");
         return true;
     }
 
