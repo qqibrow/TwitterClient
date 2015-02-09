@@ -40,31 +40,39 @@ public class TimelineActivity extends ActionBarActivity {
 
     private SwipeRefreshLayout swipeContainer;
 
+    boolean enablePullDownUpdate = true;
+    boolean enableScrollDown = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
+            // getSupportActionBar().setLogo(R.drawable.ic_twitter_logo);
+           // getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        if (enablePullDownUpdate) {
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
 
-                Toast.makeText(TimelineActivity.this, "update", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TimelineActivity.this, "update", Toast.LENGTH_SHORT).show();
 
-                // set current since_id(newest time)
-                if(tweetList.isEmpty()) {
-                    showToast("Tweet List is empty");
-                    return;
+                    // set current since_id(newest time)
+                    if (tweetList.isEmpty()) {
+                        showToast("Tweet List is empty");
+                        return;
+                    }
+                    long newestId = tweetList.get(0).getUid();
+                    long lastId = tweetList.get(tweetList.size() - 1).getUid();
+
+                    showToast(String.valueOf(newestId) + "  " + String.valueOf(lastId));
+                    populateHomeTimeline(newestId, -1, true);
+
                 }
-                long newestId = tweetList.get(0).getUid();
-                long lastId = tweetList.get(tweetList.size()-1).getUid();
-
-                showToast(String.valueOf(newestId) + "  " + String.valueOf(lastId));
-                populateHomeTimeline(newestId, -1, true);
-
-            }
-        });
+            });
+        }
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -72,25 +80,27 @@ public class TimelineActivity extends ActionBarActivity {
                 android.R.color.holo_red_light);
 
         lvTweets = (ListView) findViewById(R.id.lvTweets);
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to your AdapterView
-                long max_id =  tweetList.get(tweetList.size() - 1).getUid()-1;
-                populateHomeTimeline(1, max_id, false);
-            }
+        if(enableScrollDown) {
+            lvTweets.setOnScrollListener(new EndlessScrollListener() {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount) {
+                    // Triggered only when new data needs to be appended to the list
+                    // Add whatever code is needed to append new items to your AdapterView
+                    long max_id = tweetList.get(tweetList.size() - 1).getUid() - 1;
+                    populateHomeTimeline(1, max_id, false);
+                }
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                int topRowVerticalPosition =
-                        (lvTweets == null || lvTweets.getChildCount() == 0) ?
-                                0 : lvTweets.getChildAt(0).getTop();
-                swipeContainer.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
-                super.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    int topRowVerticalPosition =
+                            (lvTweets == null || lvTweets.getChildCount() == 0) ?
+                                    0 : lvTweets.getChildAt(0).getTop();
+                    swipeContainer.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
+                    super.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
 
-            }
-        });
+                }
+            });
+        }
 
         client = TwitterApplication.getRestClient();
 
@@ -104,17 +114,22 @@ public class TimelineActivity extends ActionBarActivity {
                 Intent intent = new Intent(TimelineActivity.this, TweetDetailActivity.class);
 
                 Tweet result = tweetList.get(position);
+                showToast(result.getUser().getProfileImageUrl());
                 intent.putExtra("tweet", result);
                 startActivity(intent);
             }
         });
 
         // below are network request.
-        if(isNetworkAvailable()) {
+        if(isNetworkAvailable() && enablePullDownUpdate) {
             populateHomeTimeline(1,-1, false);
             SetCurrentUser();
         } else {
             showToast("Network not available");
+            List<Tweet> list = Tweet.fromDatabase();
+            showToast(String.valueOf(list.size()));
+            tweetsArrayAdapter.addAll(list);
+
         }
 
     }

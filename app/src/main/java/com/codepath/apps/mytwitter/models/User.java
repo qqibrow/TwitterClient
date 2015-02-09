@@ -34,7 +34,9 @@ public class User extends Model implements Serializable {
             user.name = jsonObject.getString("name");
             user.uid = jsonObject.getLong("id");
             user.screenName = jsonObject.getString("screen_name");
-            user.profileImageUrl = jsonObject.getString("profile_image_url");
+            String image_url = jsonObject.getString("profile_image_url");
+            String biggerImageUrl = image_url.replace("_normal", "_bigger");
+            user.profileImageUrl = biggerImageUrl;
         } catch (JSONException e) {
             e.printStackTrace();
         }

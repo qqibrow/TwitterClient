@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#ffffff">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/ivProfile"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         android:src="@drawable/ic_launcher"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,7 +23,9 @@
         android:id="@+id/tvUsername"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivProfile"
-        android:layout_toEndOf="@+id/ivProfile" />
+        android:layout_toEndOf="@+id/ivProfile"
+        android:textStyle="bold"
+        android:textSize="10pt"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,14 +34,27 @@
         android:id="@+id/tvBody"
         android:layout_below="@+id/tvUsername"
         android:layout_toRightOf="@+id/ivProfile"
-        android:layout_toEndOf="@+id/ivProfile" />
+        android:layout_toEndOf="@+id/ivProfile"
+        android:textSize="10pt"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvTimestamp"
+        android:textColor="#C2CBCE"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tvScreenName"
+        android:layout_marginLeft="2dp"
+        android:textColor="#C2CBCE"
+        android:layout_alignBottom="@+id/tvUsername"
+        android:layout_toRightOf="@+id/tvUsername"
+        android:layout_toEndOf="@+id/tvUsername" />
 </RelativeLayout>

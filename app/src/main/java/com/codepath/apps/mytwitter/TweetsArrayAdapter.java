@@ -27,6 +27,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
     private TextView tvUsername;
     private TextView tvBody;
     private TextView tvTimestamp;
+    private TextView screenName;
 
 
     public TweetsArrayAdapter(Context context, List<Tweet> tweets) {
@@ -44,10 +45,12 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
         tvBody = (TextView)convertView.findViewById(R.id.tvBody);
         tvTimestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
+        screenName = (TextView) convertView.findViewById(R.id.tvScreenName);
 
         tvUsername.setText(tweet.getUser().getName());
         tvBody.setText(tweet.getBody());
         tvTimestamp.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
+        screenName.setText("@" + tweet.getUser().getScreenName());
         ivProfile.setImageResource(0);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfile);
 
@@ -63,8 +66,10 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         String relativeDate = "";
         try {
             long dateMillis = sf.parse(rawJsonDate).getTime();
-            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+            String original = DateUtils.getRelativeTimeSpanString(dateMillis,
                     System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+            String pattern = "(\\d+)(\\s+)([a-z]).*";
+            relativeDate = original.replaceAll(pattern, "$1$3");
         } catch (ParseException e) {
             e.printStackTrace();
         }
