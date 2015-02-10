@@ -17,4 +17,5 @@ Twitter Client on Android
 13. User can select "reply" from detail view to respond to a tweet
 
 ## Demo
+[![ScreenShot](http://offers.square2marketing.com/hs-fs/hub/112139/file-571711539-jpg/images/demo-resized-600.jpg)](https://www.youtube.com/watch?v=5MjDHx4oHyI)
 
