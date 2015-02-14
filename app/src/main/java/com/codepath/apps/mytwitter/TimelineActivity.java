@@ -46,22 +46,24 @@ public class TimelineActivity extends ActionBarActivity {
     boolean enableScrollDown = true;
 
     private void setActionbar() {
+        // the three necessary step to setup the icon.
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_twitter_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        // setup title
         getSupportActionBar().setTitle("   Home");
+        // Set background Color
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF3F9FE0));
     }
 
-    private void setSwipeList() {
 
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         setActionbar();
+        lvTweets = (ListView) findViewById(R.id.lvTweets);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         if (enablePullDownUpdate) {
             swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -90,7 +92,7 @@ public class TimelineActivity extends ActionBarActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        lvTweets = (ListView) findViewById(R.id.lvTweets);
+
         if(enableScrollDown) {
             lvTweets.setOnScrollListener(new EndlessScrollListener() {
                 @Override
