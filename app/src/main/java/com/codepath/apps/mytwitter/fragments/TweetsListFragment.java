@@ -6,15 +6,22 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.codepath.apps.mytwitter.R;
+import com.codepath.apps.mytwitter.TweetsArrayAdapter;
+import com.codepath.apps.mytwitter.models.Tweet;
+
+import java.util.ArrayList;
 
 /**
  * Created by lniu on 2/13/15.
  */
 public class TweetsListFragment extends Fragment {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable

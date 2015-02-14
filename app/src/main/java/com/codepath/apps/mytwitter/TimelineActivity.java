@@ -34,8 +34,8 @@ public class TimelineActivity extends ActionBarActivity {
     private TwitterClient client;
     private ArrayList<Tweet> tweetList;
     private TweetsArrayAdapter tweetsArrayAdapter;
-
     private ListView lvTweets;
+
     private User currentUser;
 
     private int REQUEST_CODE = 1;
@@ -51,6 +51,10 @@ public class TimelineActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle("   Home");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF3F9FE0));
+    }
+
+    private void setSwipeList() {
+
     }
 
     @Override
