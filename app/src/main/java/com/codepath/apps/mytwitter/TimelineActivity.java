@@ -58,8 +58,6 @@ public class TimelineActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         setActionbar();
-
-
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         if (enablePullDownUpdate) {
             swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
