@@ -5,7 +5,7 @@
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="com.codepath.apps.mytwitter.fragments.HomeTimeLineFragment"
+        android:name="com.codepath.apps.mytwitter.fragments.MentionsTimeLineFragment"
         android:id="@+id/fragment"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

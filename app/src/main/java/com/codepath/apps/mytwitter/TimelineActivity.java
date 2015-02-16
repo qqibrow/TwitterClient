@@ -1,33 +1,12 @@
 package com.codepath.apps.mytwitter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
-
-import com.codepath.apps.mytwitter.models.Tweet;
-import com.codepath.apps.mytwitter.models.User;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class TimelineActivity extends ActionBarActivity {
 
@@ -89,7 +68,6 @@ public class TimelineActivity extends ActionBarActivity {
             //tweetsArrayAdapter.notifyDataSetChanged();
         }
     }
-
 
 
     private void showToast(String text) {

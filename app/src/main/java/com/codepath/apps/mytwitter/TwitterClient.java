@@ -8,6 +8,7 @@ import android.content.Context;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 /*
@@ -83,5 +84,16 @@ public class TwitterClient extends OAuthBaseClient {
     public void getAccount(AsyncHttpResponseHandler handler) {
         String apiurl = getApiUrl("account/verify_credentials.json");
         getClient().get(apiurl, handler);
+    }
+
+    public void getMentionsTimeline(long since_id, long max_id, AsyncHttpResponseHandler handler) {
+        String apiurl = getApiUrl("statuses/mentions_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", 10);
+        if(since_id != -1)
+            params.put("since_id", since_id);
+        if(max_id != -1)
+            params.put("max_id", max_id);
+        getClient().get(apiurl,params,handler);
     }
 }
