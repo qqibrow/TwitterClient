@@ -74,13 +74,19 @@ public class ProfileActivity extends ActionBarActivity {
     }
 
     private void SetCurrentUser() {
-        client.getAccount(new JsonHttpResponseHandler() {
+        User user = (User)getIntent().getSerializableExtra("user");
+        if(user == null) {
+            client.getAccount(new JsonHttpResponseHandler() {
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
-                populateProfileUser(User.fromJson(jsonObject));
-            }
-        });
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                    populateProfileUser(User.fromJson(jsonObject));
+                }
+            });
+        } else {
+            populateProfileUser(user);
+        }
+
     }
 
     private void populateProfileUser(User user) {

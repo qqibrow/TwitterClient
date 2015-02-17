@@ -1,6 +1,7 @@
 package com.codepath.apps.mytwitter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -36,7 +37,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Tweet tweet = getItem(position);
+        final Tweet tweet = getItem(position);
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.tweet, parent, false);
         }
@@ -53,6 +54,16 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         screenName.setText("@" + tweet.getUser().getScreenName());
         ivProfile.setImageResource(0);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfile);
+
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TweetsArrayAdapter.this.getContext(), ProfileActivity.class);
+                i.putExtra("screen_name", tweet.getUser().getScreenName());
+                i.putExtra("user", tweet.getUser());
+                TweetsArrayAdapter.this.getContext().startActivity(i);
+            }
+        });
 
         return convertView;
     }
