@@ -2,6 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.codepath.apps.mytwitter.TimelineActivity">
+    <item android:id="@+id/action_profile"
+        android:title="Profile"
+        android:icon="@drawable/ic_profile"
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/action_compose"
         android:title="Compose"
         android:icon="@drawable/ic_compose"

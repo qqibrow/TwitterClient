@@ -1,12 +1,20 @@
 package com.codepath.apps.mytwitter;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.astuetz.PagerSlidingTabStrip;
+import com.codepath.apps.mytwitter.fragments.HomeTimeLineFragment;
+import com.codepath.apps.mytwitter.fragments.MentionsTimeLineFragment;
 
 public class TimelineActivity extends ActionBarActivity {
 
@@ -30,6 +38,11 @@ public class TimelineActivity extends ActionBarActivity {
         setContentView(R.layout.activity_timeline);
         setActionbar();
 
+        ViewPager vpager = (ViewPager) findViewById(R.id.viewpager);
+        vpager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
+        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip)findViewById(R.id.tabs);
+        tabStrip.setViewPager(vpager);
+
     }
 
     @Override
@@ -52,9 +65,16 @@ public class TimelineActivity extends ActionBarActivity {
             //intent.putExtra("Myself", currentUser);
             //startActivityForResult(intent, REQUEST_CODE);
             return true;
+        } else if(id == R.id.action_profile) {
+            onProfileView();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onProfileView() {
+        Intent i = new Intent(TimelineActivity.this, ProfileActivity.class);
+        startActivity(i);
     }
 
     // ActivityOne.java, time to handle the result of the sub-activity
@@ -72,5 +92,34 @@ public class TimelineActivity extends ActionBarActivity {
 
     private void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    public class TweetsPagerAdapter extends FragmentPagerAdapter {
+        private String[] tabTitles = {"Home", "Mentions"};
+
+        public TweetsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int position) {
+            if(position == 0) {
+                return new HomeTimeLineFragment();
+            } else if(position == 1) {
+                return new MentionsTimeLineFragment();
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return tabTitles.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabTitles[position];
+        }
     }
 }
