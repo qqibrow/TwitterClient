@@ -9,6 +9,9 @@
         android:id="@+id/tabs"
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"
+        android:textColor = "@color/twitter_blue"
+        android:background="@color/white"
+        app:pstsIndicatorColor="@color/twitter_blue"
         android:layout_width="match_parent"
         android:layout_height="48dp">
     </com.astuetz.PagerSlidingTabStrip>

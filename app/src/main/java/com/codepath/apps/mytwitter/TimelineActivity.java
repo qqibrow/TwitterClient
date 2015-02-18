@@ -34,7 +34,7 @@ public class TimelineActivity extends ActionBarActivity {
         getSupportActionBar().setLogo(R.drawable.ic_twitter_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         // setup title
-        getSupportActionBar().setTitle("   Home");
+        getSupportActionBar().setTitle("");
         // Set background Color
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF3F9FE0));
     }

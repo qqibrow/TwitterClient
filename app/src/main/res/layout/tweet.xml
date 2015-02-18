@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
+        android:layout_marginLeft="10dp"
         android:id="@+id/tvUsername"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivProfile"
@@ -29,8 +30,8 @@
         android:text="New Text"
         android:id="@+id/tvBody"
         android:layout_below="@+id/tvUsername"
-        android:layout_toRightOf="@+id/ivProfile"
-        android:layout_toEndOf="@+id/ivProfile"
+        android:layout_alignLeft="@id/tvUsername"
+
         android:textSize="10pt"
       />
 
@@ -55,4 +56,49 @@
         android:layout_alignBottom="@+id/tvUsername"
         android:layout_toRightOf="@+id/tvUsername"
         android:layout_toEndOf="@+id/tvUsername" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_alignLeft="@+id/tvUsername"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tvBody">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_reply"
+            android:id="@+id/ivReply" />
+
+        <ImageView
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_retweet"
+            android:id="@+id/ivRetweet" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:textSize="10pt"
+            android:id="@+id/tvRetweet" />
+
+        <ImageView
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star"
+            android:id="@+id/ivStar"
+            android:baselineAlignBottom="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="220"
+            android:textSize="10pt"
+            android:id="@+id/tvStar" />
+    </LinearLayout>
 </RelativeLayout>
