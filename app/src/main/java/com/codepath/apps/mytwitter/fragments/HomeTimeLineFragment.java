@@ -1,6 +1,7 @@
 package com.codepath.apps.mytwitter.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -126,5 +127,11 @@ public class HomeTimeLineFragment extends TweetsListFragment {
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+    public void onActivityResult(Intent intent) {
+        Tweet composed_tweet = (Tweet) intent.getSerializableExtra("Tweet");
+        getArrayAdapter().insert(composed_tweet, 0);
+        getArrayAdapter().notifyDataSetChanged();
     }
 }

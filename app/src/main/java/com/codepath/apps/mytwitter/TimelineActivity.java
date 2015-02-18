@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,11 +16,17 @@ import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.mytwitter.fragments.HomeTimeLineFragment;
 import com.codepath.apps.mytwitter.fragments.MentionsTimeLineFragment;
+import com.codepath.apps.mytwitter.models.User;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 public class TimelineActivity extends ActionBarActivity {
 
     private int REQUEST_CODE = 1;
-
+    private User currentUser;
+    HomeTimeLineFragment homeTimeLineFragment;
 
     private void setActionbar() {
         // the three necessary step to setup the icon.
@@ -37,7 +44,7 @@ public class TimelineActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         setActionbar();
-
+        SetCurrentUser();
         ViewPager vpager = (ViewPager) findViewById(R.id.viewpager);
         vpager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip)findViewById(R.id.tabs);
@@ -61,9 +68,11 @@ public class TimelineActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_compose) {
-            //Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
-            //intent.putExtra("Myself", currentUser);
-            //startActivityForResult(intent, REQUEST_CODE);
+            Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+            if(currentUser == null)
+                Log.d("error", "current user is null");
+            intent.putExtra("Myself", currentUser);
+            startActivityForResult(intent, REQUEST_CODE);
             return true;
         } else if(id == R.id.action_profile) {
             onProfileView();
@@ -83,7 +92,10 @@ public class TimelineActivity extends ActionBarActivity {
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             // Extract name value from result extras
-            //Tweet composed_tweet = (Tweet) data.getSerializableExtra("Tweet");
+            // Tweet composed_tweet = (Tweet) data.getSerializableExtra("Tweet");
+            if(homeTimeLineFragment != null) {
+                homeTimeLineFragment.onActivityResult(data);
+            }
             //tweetsArrayAdapter.insert(composed_tweet, 0);
             //tweetsArrayAdapter.notifyDataSetChanged();
         }
@@ -104,7 +116,9 @@ public class TimelineActivity extends ActionBarActivity {
         @Override
         public android.support.v4.app.Fragment getItem(int position) {
             if(position == 0) {
-                return new HomeTimeLineFragment();
+                homeTimeLineFragment = new HomeTimeLineFragment();
+                return homeTimeLineFragment;
+
             } else if(position == 1) {
                 return new MentionsTimeLineFragment();
             } else {
@@ -121,5 +135,14 @@ public class TimelineActivity extends ActionBarActivity {
         public CharSequence getPageTitle(int position) {
             return tabTitles[position];
         }
+    }
+
+    private void SetCurrentUser() {
+        TwitterApplication.getRestClient().getAccount(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                currentUser = User.fromJson(jsonObject);
+            }
+        });
     }
 }

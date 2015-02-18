@@ -1,5 +1,6 @@
 package com.codepath.apps.mytwitter;
 
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class ProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        setActionbar();
         client = TwitterApplication.getRestClient();
         myProfile = (ImageView) findViewById(R.id.ivProfileImage);
         myName = (TextView)findViewById(R.id.tvProfileName);
@@ -48,6 +49,14 @@ public class ProfileActivity extends ActionBarActivity {
             ft.commit();
         }
 
+    }
+
+    private void setActionbar() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_twitter_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("   Profile");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF3F9FE0));
     }
 
 
