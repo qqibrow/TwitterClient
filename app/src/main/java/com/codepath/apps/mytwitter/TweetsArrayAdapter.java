@@ -29,6 +29,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
     private TextView tvBody;
     private TextView tvTimestamp;
     private TextView screenName;
+    private TextView tvStar, tvRetweet;
 
 
     public TweetsArrayAdapter(Context context, List<Tweet> tweets) {
@@ -47,6 +48,18 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         tvBody = (TextView)convertView.findViewById(R.id.tvBody);
         tvTimestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
         screenName = (TextView) convertView.findViewById(R.id.tvScreenName);
+        tvStar = (TextView) convertView.findViewById(R.id.tvStar);
+        tvRetweet = (TextView) convertView.findViewById(R.id.tvRetweet);
+
+        tvRetweet.setText("");
+        long retweet_count = tweet.getRetweetCount();
+        if(retweet_count != 0 && !tweet.getUser().getScreenName().equals("lu_niu") )
+            tvRetweet.setText(String.valueOf(retweet_count));
+
+        tvStar.setText("");
+        long star_count = tweet.getFavouritesCount();
+        if(star_count != 0)
+            tvStar.setText(String.valueOf(star_count));
 
         tvUsername.setText(tweet.getUser().getName());
         tvBody.setText(tweet.getBody());

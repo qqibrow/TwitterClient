@@ -1,6 +1,7 @@
 package com.codepath.apps.mytwitter.models;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +25,9 @@ import com.activeandroid.query.Select;
 
 @Table(name = "Tweets")
 public class Tweet extends Model implements Serializable {
+    private long retweetCount;
+    private long favouritesCount;
+
     public Tweet() {
         super();
     }
@@ -58,11 +62,15 @@ public class Tweet extends Model implements Serializable {
     public static Tweet fromJson(JSONObject jsonObject) {
         Tweet tweet = new Tweet();
         try {
+            // Log.d("Tweet", jsonObject.toString());
             tweet.body = jsonObject.getString("text");
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.createAtLong = getRelativeTimeAgo(tweet.createdAt);
             tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+            tweet.retweetCount = jsonObject.getLong("retweet_count");
+            if(jsonObject.has("favorite_count"))
+                tweet.favouritesCount = jsonObject.getLong("favorite_count");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -109,5 +117,13 @@ public class Tweet extends Model implements Serializable {
 
     public User getUser() {
         return user;
+    }
+
+    public long getRetweetCount() {
+        return retweetCount;
+    }
+
+    public long getFavouritesCount() {
+        return favouritesCount;
     }
 }

@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#C2CBCE"
-            android:id="@+id/tvProfileScreenName"
+            android:id="@+id/tvTagline"
             android:layout_below="@+id/tvProfileName"
             android:layout_toRightOf="@+id/ivProfileImage"
             android:layout_toEndOf="@+id/ivProfileImage" />
@@ -42,7 +42,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/ivProfileImage"
+            android:layout_below="@+id/tvTagline"
             android:padding="5dp">
 
             <TextView

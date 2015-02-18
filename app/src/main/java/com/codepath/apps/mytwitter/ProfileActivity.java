@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.codepath.apps.mytwitter.R;
 import com.codepath.apps.mytwitter.fragments.UserTimelineFragment;
 import com.codepath.apps.mytwitter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -20,7 +19,7 @@ import org.json.JSONObject;
 
 public class ProfileActivity extends ActionBarActivity {
     ImageView myProfile;
-    TextView myName, myUserId;
+    TextView myName, tagline;
     TwitterClient client;
     TextView tvFollowers;
     TextView tvFollowings;
@@ -33,7 +32,7 @@ public class ProfileActivity extends ActionBarActivity {
         client = TwitterApplication.getRestClient();
         myProfile = (ImageView) findViewById(R.id.ivProfileImage);
         myName = (TextView)findViewById(R.id.tvProfileName);
-        myUserId = (TextView) findViewById(R.id.tvProfileScreenName);
+        tagline = (TextView) findViewById(R.id.tvTagline);
         tvFollowers = (TextView) findViewById(R.id.tvFollowers);
         tvFollowings = (TextView) findViewById(R.id.tvFollowings);
 
@@ -102,7 +101,7 @@ public class ProfileActivity extends ActionBarActivity {
         myProfile.setImageResource(0);
         Picasso.with(this).load(user.getProfileImageUrl()).into(myProfile);
         myName.setText(user.getName());
-        myUserId.setText(user.getTagline());
+        tagline.setText(user.getTagline());
         tvFollowers.setText(user.getFollowersCount() + " Followers");
         tvFollowings.setText(user.getFollowingCount() + " Following");
     }
