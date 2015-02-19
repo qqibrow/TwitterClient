@@ -27,6 +27,8 @@ public class User extends Model implements Serializable {
     private String tagline;
     private int followersCount;
     private int followingCount;
+    private int tweetsCount;
+    private String backgroundUrl;
 
     public User() {
         super();
@@ -44,6 +46,8 @@ public class User extends Model implements Serializable {
             user.tagline = jsonObject.getString("description");
             user.followersCount = jsonObject.getInt("followers_count");
             user.followingCount = jsonObject.getInt("friends_count");
+            user.tweetsCount = jsonObject.getInt("statuses_count");
+            user.backgroundUrl = jsonObject.getString("profile_background_image_url");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -83,5 +87,13 @@ public class User extends Model implements Serializable {
 
     public int getFollowingCount() {
         return followingCount;
+    }
+
+    public int getTweetsCount() {
+        return tweetsCount;
+    }
+
+    public String getBackgroundUrl() {
+        return backgroundUrl;
     }
 }

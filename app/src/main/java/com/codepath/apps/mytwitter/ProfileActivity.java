@@ -1,18 +1,24 @@
 package com.codepath.apps.mytwitter;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.mytwitter.fragments.UserTimelineFragment;
 import com.codepath.apps.mytwitter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -20,9 +26,9 @@ import org.json.JSONObject;
 public class ProfileActivity extends ActionBarActivity {
     ImageView myProfile;
     TextView myName, tagline;
+    RelativeLayout rlHeader;
     TwitterClient client;
-    TextView tvFollowers;
-    TextView tvFollowings;
+    TextView tvFollowers,tvFollowings, tvTweets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +41,8 @@ public class ProfileActivity extends ActionBarActivity {
         tagline = (TextView) findViewById(R.id.tvTagline);
         tvFollowers = (TextView) findViewById(R.id.tvFollowers);
         tvFollowings = (TextView) findViewById(R.id.tvFollowings);
-
+        tvTweets = (TextView) findViewById(R.id.tvTweets);
+        rlHeader = (RelativeLayout)findViewById(R.id.rlUserHeader);
 
         SetCurrentUser();
         String screen_name = getIntent().getStringExtra("screen_name");
@@ -101,8 +108,30 @@ public class ProfileActivity extends ActionBarActivity {
         myProfile.setImageResource(0);
         Picasso.with(this).load(user.getProfileImageUrl()).into(myProfile);
         myName.setText(user.getName());
-        tagline.setText(user.getTagline());
-        tvFollowers.setText(user.getFollowersCount() + " Followers");
-        tvFollowings.setText(user.getFollowingCount() + " Following");
+        tagline.setText(user.getScreenName());
+        tvFollowers.setText(String.valueOf(user.getFollowersCount()));
+        tvFollowings.setText(String.valueOf(user.getFollowingCount()));
+        tvTweets.setText(String.valueOf(user.getTweetsCount()));
+
+        /* not work at this time.
+        Picasso.with(ProfileActivity.this).load(user.getBackgroundUrl()).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                Toast.makeText(ProfileActivity.this, "loaded bitmap", Toast.LENGTH_LONG).show();
+                ProfileActivity.this.rlHeader.setBackground(
+                        new BitmapDrawable(ProfileActivity.this.getResources(), bitmap));
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
+        */
     }
 }

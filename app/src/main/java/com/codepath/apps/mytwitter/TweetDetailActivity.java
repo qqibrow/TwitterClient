@@ -64,7 +64,7 @@ public class TweetDetailActivity extends ActionBarActivity {
         etInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                etInput.setText("@" + tweet.getUser().getScreenName());
+                etInput.setText("@" + tweet.getUser().getScreenName() + " ");
                 etInput.setSelection(etInput.getText().length());
             }
         });

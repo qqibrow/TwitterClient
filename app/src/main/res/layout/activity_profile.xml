@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.codepath.apps.mytwitter.ProfileActivity"
-    android:background="@android:color/white">
+    >
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -10,62 +10,123 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/rlUserHeader">
+        android:id="@+id/rlUserHeader"
+        android:background="@color/silver">
 
-        <ImageView
-            style="@style/Profile"
-            android:id="@+id/ivProfileImage"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
 
-        <TextView
-            style="@style/Username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvProfileName"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/ivProfileImage"
-            android:layout_toEndOf="@+id/ivProfileImage" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#C2CBCE"
-            android:id="@+id/tvTagline"
-            android:layout_below="@+id/tvProfileName"
-            android:layout_toRightOf="@+id/ivProfileImage"
-            android:layout_toEndOf="@+id/ivProfileImage" />
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/tvTagline"
-            android:padding="5dp">
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+            <ImageView
+                style="@style/Profile"
+                android:id="@+id/ivProfileImage"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_launcher"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                style="@style/Username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvProfileName"
+                android:textColor="@color/white"
+                android:text="Lu Niu"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/ivProfileImage"
+                android:layout_toEndOf="@+id/ivProfileImage" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/tvFollowers" />
-
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/tvFollowings" />
-        </LinearLayout>
+                android:textColor="@color/white"
+                android:text="lu_niu"
+                android:id="@+id/tvTagline"
+                android:layout_below="@+id/tvProfileName"
+                android:layout_toRightOf="@+id/ivProfileImage"
+                android:layout_toEndOf="@+id/ivProfileImage" />
+            </LinearLayout>
 
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llStats"
+        android:layout_below="@+id/rlUserHeader"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="12"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/tvTweets" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Tweets"
+            android:layout_alignLeft="@+id/tvTweets"
+            android:layout_below="@id/tvTweets"
+            android:layout_marginRight="50dp"
+            android:id="@+id/Tweets" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="210"
+            android:layout_alignLeft="@+id/Following"
+            android:layout_alignStart="@+id/Following"
+            android:id="@+id/tvFollowings" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Following"
+            android:layout_toRightOf="@+id/Tweets"
+            android:layout_alignBottom="@+id/Tweets"
+            android:layout_marginRight="50dp"
+            android:id="@+id/Following" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="210"
+            android:layout_alignLeft="@+id/Followers"
+            android:layout_alignStart="@+id/Followers"
+
+            android:id="@+id/tvFollowers" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Followers"
+            android:layout_toRightOf="@+id/Following"
+            android:layout_alignBaseline="@id/Following"
+            android:id="@+id/Followers" />
     </RelativeLayout>
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/rlUserHeader"
+        android:layout_below="@+id/llStats"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/flContainer"></FrameLayout>
