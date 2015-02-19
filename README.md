@@ -23,5 +23,5 @@ Twitter Client on Android
 17. User can infinitely paginate any of these timelines (home, mentions, user) by scrolling to the bottom
 
 ## Demo
-[![ScreenShot](http://offers.square2marketing.com/hs-fs/hub/112139/file-571711539-jpg/images/demo-resized-600.jpg)](https://www.youtube.com/watch?v=5MjDHx4oHyI)
+[![ScreenShot](http://offers.square2marketing.com/hs-fs/hub/112139/file-571711539-jpg/images/demo-resized-600.jpg)](https://www.youtube.com/watch?v=rv5JAcVJ4JY)
 
