@@ -15,6 +15,12 @@ Twitter Client on Android
 11. User can open the twitter app offline and see last loaded tweets
 12. User can tap a tweet to display a "detailed" view of that tweet
 13. User can select "reply" from detail view to respond to a tweet
+14. User can switch between Timeline and Mention views using tabs
+      * User can view their home timeline tweets.
+      * User can view the recent mentions of their username.
+15. User can navigate to view their own profile
+16. User can click on the profile image in any tweet to see another user's profile.
+17. User can infinitely paginate any of these timelines (home, mentions, user) by scrolling to the bottom
 
 ## Demo
 [![ScreenShot](http://offers.square2marketing.com/hs-fs/hub/112139/file-571711539-jpg/images/demo-resized-600.jpg)](https://www.youtube.com/watch?v=5MjDHx4oHyI)
